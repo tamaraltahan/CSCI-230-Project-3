@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 
 public class Reader {
 
-    String text;
+    String inputText;
 
     //-------------------------------file names------------------------------------
     private static final String declartionFilePath = "C:\\Users\\Tamar\\Desktop\\usdeclarPC.txt";
@@ -15,12 +15,12 @@ public class Reader {
 
     public String getDeclaration(){
         readFile(declartionFilePath);
-        return text;
+        return inputText;
     }
 
     public String getDNA(){
         readFile(humanDNAFilePath);
-        return text;
+        return inputText;
     }
 
     private void readFile(String FILENAME) {
@@ -32,7 +32,7 @@ public class Reader {
             while ((text = reader.readLine()) != null) {
                 builder.append(text);
             }
-            text = builder.toString();
+            inputText = builder.toString();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
