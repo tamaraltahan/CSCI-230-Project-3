@@ -1,52 +1,61 @@
 import java.util.*;
 
 public class HuffmanCoding {
+    private static int uniqueCharacters = 0;
 
+    public HuffmanTree buildTree(int[] charFreqs) {
+        PriorityQueue<HuffmanTree> trees = new PriorityQueue<>();
+        // initially, we have a forest of leaves
+        // one for each non-empty character
+        for (int i = 0; i < charFreqs.length; i++)
+            if (charFreqs[i] > 0)
+                trees.offer(new HuffmanLeaf(charFreqs[i], (char) i));
 
-    private static class Node {
-        private final char ch;
-        private final int freq;
-        private final Node left, right;
+        assert trees.size() > 0;
+        // loop until there is only one tree left
+        while (trees.size() > 1) {
+            // two trees with least frequency
+            HuffmanTree a = trees.poll();
+            HuffmanTree b = trees.poll();
 
-        Node(char ch, int freq, Node left, Node right) {
-            this.ch = ch;
-            this.freq = freq;
-            this.left = left;
-            this.right = right;
+            // put into new node and re-insert into queue
+            trees.offer(new HuffmanNode(a, b));
         }
+        return trees.poll();
+    }
 
-        private boolean isLeaf() {
-            //assert ((left == null) && (right == null)) || ((left != null) && (right != null));
-            return (left == null) && (right == null);
-        }
+    public static void printCodes(HuffmanTree tree, StringBuffer prefix) {
+        if (tree instanceof HuffmanLeaf) { //if node is external
+            HuffmanLeaf leaf = (HuffmanLeaf) tree;
+            uniqueCharacters++;
+            // print out character, frequency, and code for this leaf (which is just the prefix)
+            //System.out.println(leaf.value + "\t" + leaf.frequency + "\t" + prefix);
+            if(leaf.value == '\n'){
+                System.out.println("\\n" + "\t" + prefix);
+            }
+            else if(leaf.value == ' '){
+                System.out.println("\\s" + "\t" + prefix);
+            }
+            else {
+                System.out.println(leaf.value + "\t" + prefix);
+            }
+        } else if (tree instanceof HuffmanNode) { //else if is internal
+            HuffmanNode node = (HuffmanNode) tree;
 
-        // compare, based on frequency
-        public int compareTo(Node that) {
-            return this.freq - that.freq;
+            // traverse left
+            prefix.append('0');
+            printCodes(node.left, prefix);
+            prefix.deleteCharAt(prefix.length() - 1);
+
+            // traverse right
+            prefix.append('1');
+            printCodes(node.right, prefix);
+            prefix.deleteCharAt(prefix.length() - 1);
         }
     }
 
-
-
-
-    DefaultComparator comp = new DefaultComparator();
-    PriorityQueue<String> Heap = new PriorityQueue<>();
-
-    private int[] freq(char[] input){
-        int[] freq = new int[256];
-        for(int i = 0; i < input.length; i++){
-            freq[input[i]]++;
-        }
-        return freq;
+    public static void printTree(HuffmanTree tree, StringBuffer prefix){
+        
+        printCodes(tree,prefix);
     }
-
-    public PriorityQueue<String> Compress(char[] input){
-        int[] freq = freq(input);
-        for(int i = 0; i < freq.length; i++){
-           
-        }
-
-    }
-
-
 }

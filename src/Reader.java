@@ -10,6 +10,7 @@ public class Reader {
     //-------------------------------file names------------------------------------
     private static final String declartionFilePath = "C:\\Users\\Tamar\\Desktop\\usdeclarPC.txt";
     private static final String humanDNAFilePath = "C:\\Users\\Tamar\\Desktop\\humanDNA.txt";
+    private static final String moneyInFilePath = "C:\\Users\\Tamar\\Downloads\\moneyIn.txt";
     //-----------------------------------------------------------------------------
 
 
@@ -23,6 +24,11 @@ public class Reader {
         return inputText;
     }
 
+    public String getMoneyIn(){
+        readFile(moneyInFilePath);
+        return inputText;
+    }
+
     private void readFile(String FILENAME) {
         StringBuilder builder = new StringBuilder();
         BufferedReader reader = null;
@@ -31,6 +37,7 @@ public class Reader {
             reader = new BufferedReader(new FileReader(FILENAME));
             while ((text = reader.readLine()) != null) {
                 builder.append(text);
+                builder.append("\n");
             }
             inputText = builder.toString();
         } catch (FileNotFoundException e) {
@@ -38,6 +45,7 @@ public class Reader {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            //System.out.println(builder.toString());
             try {
                 if (reader != null) {
                     reader.close();

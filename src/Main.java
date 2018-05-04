@@ -2,6 +2,8 @@ public class Main {
 
     public static void main(String[] args) {
         patterns();
+        System.out.println();
+        huffman();
 
     }
 
@@ -12,44 +14,69 @@ public class Main {
         String pattern;
         Reader reader = new Reader();
         PatternMatching patternMatching = new PatternMatching();
-        int index;
 
         //declaration
+        //word IN file
+        System.out.println("Good");
         text = reader.getDeclaration();
-        pattern = "harass";
+        pattern = "Declaration";
         //BM
-        index = patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: Boyer Moore\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toLowerCase().toCharArray());
+        patternMatching.printData();
         //KMP
-        index = patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: KMP\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toLowerCase().toCharArray());
+        patternMatching.printData();
 
         //word NOT in file
+        System.out.println("Bad");
         pattern = "King George is my Homie";
         //BM
-        index = patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: Boyer Moore\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toLowerCase().toCharArray());
+        patternMatching.printData();
         //KMP
-        index = patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: KMP\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toLowerCase().toCharArray());
+        patternMatching.printData();
+
 
         //DNA
+        System.out.println("Good");
         text = reader.getDNA().toUpperCase();
         pattern = "TAGTAC";
 
-        index = patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: Boyer Moore\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toLowerCase().toCharArray());
+        patternMatching.printData();
+
         //KMP
-        index = patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: KMP\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toLowerCase().toCharArray());
+        patternMatching.printData();
+
 
         //word NOT in file
+        System.out.println("bad");
         pattern = "TACGATCATATA";
         //BM
-        index = patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: Boyer Moore\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findBoyerMoore(text.toLowerCase().toCharArray(),pattern.toCharArray());
+        patternMatching.printData();
+
         //KMP
-        index = patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toCharArray());
-        System.out.println("Matching Scheme: KMP\n" + "Index found at: " + index + "\nTime: " + patternMatching.getTime() + "\nComparisons: " + patternMatching.getComparisons());
+        patternMatching.findKMP(text.toLowerCase().toCharArray(),pattern.toCharArray());
+        patternMatching.printData();
+
+    }
+
+
+    public static void huffman(){
+        System.out.println("Huffman Coding:");
+        //Writer writer = new Writer();
+        Reader reader = new Reader();
+        HuffmanCoding huffman = new HuffmanCoding();
+
+        String input = reader.getMoneyIn();
+        int[] freq = new int[256];
+        for(char c : input.toCharArray()){
+            freq[c]++;
+        }
+        HuffmanTree tree = huffman.buildTree(freq);
+        huffman.printCodes(tree, new StringBuffer());
     }
 }

@@ -2,10 +2,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PatternMatching {
-   private int comparisons = 0;
+    private int comparisons = 0;
     private double time = 0;
+    private String scheme;
+    private int index;
+    private String file;
 
-    public int getComparisons(){
+
+    public int getComparisons() {
         return comparisons;
     }
 
@@ -13,13 +17,17 @@ public class PatternMatching {
         return time;
     }
 
-    public int findBoyerMoore(char[] text, char[] pattern){
+    public int findBoyerMoore(char[] text, char[] pattern) {
+        scheme = "Boyer Moore";
+        //file = list.size() == 1000 ? "Small1k.txt" : "Large100k.txt";
+        file = text.length > 10000 ? "DNA" : "Declaration";
         comparisons = 0;
         time = 0;
         double t1 = System.currentTimeMillis();
-        int n = BoyerMoore(text,pattern);
+        int n = BoyerMoore(text, pattern);
         double t2 = System.currentTimeMillis();
         time = t2 - t1;
+        index = n;
         return n;
     }
 
@@ -40,7 +48,7 @@ public class PatternMatching {
         while (i < n) {
             comparisons++;
             if (text[i] == pattern[k]) {
-                if (k == 0){
+                if (k == 0) {
                     return i;
                 }
                 i--;
@@ -53,13 +61,16 @@ public class PatternMatching {
         return -1; // pattern was never found
     }
 
-    public int findKMP(char[] text, char[] pattern){
+    public int findKMP(char[] text, char[] pattern) {
+        scheme = "KMP";
+        file = text.length > 10000 ? "DNA" : "Declaration";
         comparisons = 0;
         time = 0;
         double t1 = System.currentTimeMillis();
-        int n = KMP(text,pattern);
+        int n = KMP(text, pattern);
         double t2 = System.currentTimeMillis();
         time = t2 - t1;
+        index = n;
         return n;
     }
 
@@ -104,5 +115,9 @@ public class PatternMatching {
                 j++;
         }
         return fail;
+    }
+
+    public void printData(){
+        System.out.println("File: " + file + "\nMatching Scheme: " + scheme + "\nIndex found at: " + index + "\nTime: " + time + "\nComparisons: "  + comparisons + "\n");
     }
 }
