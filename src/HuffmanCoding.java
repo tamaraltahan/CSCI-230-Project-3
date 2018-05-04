@@ -2,6 +2,7 @@ import java.util.*;
 
 public class HuffmanCoding {
     private static int uniqueCharacters = 0;
+    private static String bits;
 
     public HuffmanTree buildTree(int[] charFreqs) {
         PriorityQueue<HuffmanTree> trees = new PriorityQueue<>();
@@ -24,7 +25,7 @@ public class HuffmanCoding {
         return trees.poll();
     }
 
-    public static void printCodes(HuffmanTree tree, StringBuffer prefix) {
+    public static void printCodes(HuffmanTree tree, StringBuilder prefix) {
         if (tree instanceof HuffmanLeaf) { //if node is external
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
             uniqueCharacters++;
@@ -44,18 +45,21 @@ public class HuffmanCoding {
 
             // traverse left
             prefix.append('0');
+            bits += prefix;
             printCodes(node.left, prefix);
             prefix.deleteCharAt(prefix.length() - 1);
 
             // traverse right
             prefix.append('1');
+            bits += prefix;
             printCodes(node.right, prefix);
             prefix.deleteCharAt(prefix.length() - 1);
         }
     }
 
-    public static void printTree(HuffmanTree tree, StringBuffer prefix){
-        
+    public static void printTree(HuffmanTree tree, StringBuilder prefix){
         printCodes(tree,prefix);
+        System.out.println("Number of characters: " + uniqueCharacters);
+        System.out.println("Number of bits: "  + bits.length()/8 + "\nbit string " + bits);
     }
 }

@@ -77,6 +77,7 @@ public class Main {
             freq[c]++;
         }
         HuffmanTree tree = huffman.buildTree(freq);
-        huffman.printCodes(tree, new StringBuffer());
+        //huffman.printCodes(tree, new StringBuilder());
+        huffman.printTree(tree,new StringBuilder());
     }
 }
