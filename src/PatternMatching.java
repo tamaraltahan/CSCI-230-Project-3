@@ -9,14 +9,6 @@ public class PatternMatching {
     private String file;
 
 
-    public int getComparisons() {
-        return comparisons;
-    }
-
-    public double getTime() {
-        return time;
-    }
-
     public int findBoyerMoore(char[] text, char[] pattern) {
         scheme = "Boyer Moore";
         //file = list.size() == 1000 ? "Small1k.txt" : "Large100k.txt";
@@ -75,8 +67,6 @@ public class PatternMatching {
     }
 
     private int KMP(char[] text, char[] pattern) {
-        comparisons = 0;
-        time = 0;
         int n = text.length;
         int m = pattern.length;
         if (m == 0) return 0;
@@ -104,7 +94,6 @@ public class PatternMatching {
         int j = 1;
         int k = 0;
         while (j < m) {
-            comparisons++;
             if (pattern[j] == pattern[k]) {
                 fail[j] = k + 1;
                 j++;

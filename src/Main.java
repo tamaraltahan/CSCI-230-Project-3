@@ -4,7 +4,6 @@ public class Main {
         patterns();
         System.out.println();
         huffman();
-
     }
 
 
