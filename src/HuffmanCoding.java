@@ -1,7 +1,8 @@
 import java.util.*;
 
 public class HuffmanCoding {
-    private static HashMap<Character, String> charBitMap = new HashMap<>();
+    private static HashMap<Character, String> charBitMap = new HashMap<>(); //for compression
+    private static HashMap<String, Character> dictionary = new HashMap<>(); //for decompression
     private static int characters = 0;
     
 
@@ -42,6 +43,7 @@ public class HuffmanCoding {
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
             //System.out.println(prefix);
             charBitMap.put(leaf.value, prefix.toString());
+            dictionary.put(prefix.toString(),leaf.value);
             if (leaf.value == '\n') {
                 System.out.println("\\n" + "\t" + prefix);
             } else if (leaf.value == ' ') {
@@ -80,11 +82,20 @@ public class HuffmanCoding {
         System.out.println("Number of characters: " + characters);
         String bit = getBitValues(input,charBitMap);
         System.out.println("Number of bits: " + bit.length() + "\nBit String: " + bit);
+        System.out.println("Decompression result: " + decompress(bit));
     }
 
-
-    public String decompress(HuffmanTree tree, HashMap<Character,String> map, String bitString){
-
+    private static String decompress(String s) {
+        String temp = "";
+        String result = "";
+        for(int i = 0; i < s.length(); i++) {
+            temp = temp + s.charAt(i);
+            if(dictionary.containsKey(temp)) {
+                result = result + dictionary.get(temp);
+                temp = "";
+            }
+        }
+        return result;
     }
 }
 
