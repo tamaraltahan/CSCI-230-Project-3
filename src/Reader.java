@@ -8,13 +8,13 @@ public class Reader {
     String inputText;
 
     //-------------------------------file names------------------------------------
-    private static final String declarationFilePath = "C:\\Users\\Tamar\\Desktop\\usdeclarPC.txt";
-    private static final String humanDNAFilePath = "C:\\Users\\Tamar\\Desktop\\humanDNA.txt";
-    private static final String moneyInFilePath = "C:\\Users\\Tamar\\Downloads\\moneyIn.txt";
+//    private static final String declarationFilePath = "C:\\Users\\Tamar\\Desktop\\usdeclarPC.txt";
+//    private static final String humanDNAFilePath = "C:\\Users\\Tamar\\Desktop\\humanDNA.txt";
+//    private static final String moneyInFilePath = "C:\\Users\\Tamar\\Downloads\\moneyIn.txt";
 
-//    private static final String declarationFilePath = "C:\\Users\\tamar\\Desktop\\stuff\\CS stuff\\usdeclarPC.txt";
-//    private static final String humanDNAFilePath = "C:\\Users\\tamar\\Desktop\\stuff\\CS stuff\\humanDNA.txt";
-//    private static final String moneyInFilePath = "C:\\Users\\tamar\\Desktop\\stuff\\CS stuff\\moneyIn.txt";
+    private static final String declarationFilePath = "C:\\Users\\tamar\\Desktop\\stuff\\CS stuff\\usdeclarPC.txt";
+    private static final String humanDNAFilePath = "C:\\Users\\tamar\\Desktop\\stuff\\CS stuff\\humanDNA.txt";
+    private static final String moneyInFilePath = "C:\\Users\\tamar\\Desktop\\stuff\\CS stuff\\moneyIn.txt";
     //-----------------------------------------------------------------------------
 
 
@@ -39,9 +39,9 @@ public class Reader {
         try {
             String text;
             reader = new BufferedReader(new FileReader(FILENAME));
+            builder.append('\n'); //read the newline character
             while ((text = reader.readLine()) != null) {
                 builder.append(text);
-                builder.append("\n");
             }
             inputText = builder.toString();
         } catch (FileNotFoundException e) {

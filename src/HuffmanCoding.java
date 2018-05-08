@@ -1,8 +1,10 @@
 import java.util.*;
 
 public class HuffmanCoding {
+    private static HashMap<Character, String> charBitMap = new HashMap<>();
     private static int characters = 0;
-    private static String bits = "";
+    
+
 
     /**
      * Construsts a Huffman Tree based on the algorithm from the book
@@ -29,6 +31,7 @@ public class HuffmanCoding {
         return trees.poll();
     }
 
+
     /**
      *  Recursively outputs leaf nodes
      * @param tree Huffman Tree
@@ -37,36 +40,51 @@ public class HuffmanCoding {
     public static void printCodes(HuffmanTree tree, StringBuilder prefix) {
         if (tree instanceof HuffmanLeaf) { //if node is external
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
-            leaf.bitValue = prefix.toString();
-            // print out character, frequency, and code for this leaf (which is just the prefix)
-            //System.out.println(leaf.value + "\t" + leaf.frequency + "\t" + prefix);
-            if(leaf.value == '\n'){
+            //System.out.println(prefix);
+            charBitMap.put(leaf.value, prefix.toString());
+            if (leaf.value == '\n') {
                 System.out.println("\\n" + "\t" + prefix);
-            }
-            else if(leaf.value == ' '){
+            } else if (leaf.value == ' ') {
                 System.out.println("\\s" + "\t" + prefix);
-            }
-            else {
+            } else {
                 System.out.println(leaf.value + "\t" + prefix);
             }
-        } else if (tree instanceof HuffmanNode) { //else if is internal
+        } else if (tree instanceof HuffmanNode) { //else if is internal -> postorder traversal
             HuffmanNode node = (HuffmanNode) tree;
             // traverse left
             prefix.append('0');
-            bits += prefix;
             printCodes(node.left, prefix);
             prefix.deleteCharAt(prefix.length() - 1);
             // traverse right
             prefix.append('1');
-            bits += prefix;
             printCodes(node.right, prefix);
             prefix.deleteCharAt(prefix.length() - 1);
         }
     }
 
-    public static void printTree(HuffmanTree tree, StringBuilder prefix){
-        printCodes(tree,prefix);
-        System.out.println("Number of characters: " + (characters-1));
-        System.out.println("Number of bits: "  + bits.length() + "\nBit String: " + bits);
+    private static String getBitValues(String word, HashMap<Character,String> map){
+        StringBuilder builder = new StringBuilder();
+        char[] arr = word.toCharArray();
+        for (int i = 0; i < arr.length; i++) {
+            Character c = arr[i];
+            if (map.containsKey(c)) {
+                builder.append(map.get(c));
+            }
+        }
+        return builder.toString();
+    }
+
+    public static void printTree(String input, HuffmanTree tree){
+        System.out.println(input);
+        printCodes(tree,new StringBuilder());
+        System.out.println("Number of characters: " + characters);
+        String bit = getBitValues(input,charBitMap);
+        System.out.println("Number of bits: " + bit.length() + "\nBit String: " + bit);
+    }
+
+
+    public String decompress(HuffmanTree tree, HashMap<Character,String> map, String bitString){
+
     }
 }
+
